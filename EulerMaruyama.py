@@ -42,7 +42,7 @@ class EulerMaruyama:
             self.solution.append(ys.copy())
         return None
 
-    def plot_solution(self,eq=0):
+    def plot_solution(self,eq=0,title=''):
         #order = (int(np.log10(len(self.solution)))-1)
         for ys in self.solution:
             #print(len(ys),len(self.ts))
@@ -50,6 +50,7 @@ class EulerMaruyama:
             plt.plot(self.ts.T[:,eq], ys[:,eq], color='blue', alpha=(3e-3))
         plt.plot(self.ts.T[:,eq], np.min(np.array(self.solution),axis=0)[:,eq],color='black')
         plt.plot(self.ts.T[:,eq], np.max(np.array(self.solution),axis=0)[:,eq],color='black')
+        plt.title(title)
         plt.show()
 
     def plot_dist(self,t,eq=0):
@@ -73,8 +74,7 @@ if __name__=='__main__':
     def sigma(y,t):
         return np.array([-alpha*y[1]*y[0],alpha*y[1]*y[0],0])
 
-    em = EulerMaruyama(num_sims=10000,t_init=0,t_end=200,grid_size=1000,y_init=np.array([0.9999,0.0001,0.0]),mu=mu,sigma=sigma,verbose=0)
+    em = EulerMaruyama(num_sims=100,t_init=0,t_end=200,grid_size=1000,y_init=np.array([0.9999,0.0001,0.0]),mu=mu,sigma=sigma,verbose=0)
     #print(em.solution)
     em.plot_solution(eq=1)
     em.plot_dist(45,eq=1)
-    
